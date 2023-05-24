@@ -1,0 +1,13 @@
+.button {
+  width: 100px;
+  height: 34px;
+
+  font-size: $text-size;
+  line-height: $text-lh-size-1;
+  background-color: $primary-color;
+  border-radius: 80px;
+
+  &--yellow {
+    color: $color-dark;
+  }
+}

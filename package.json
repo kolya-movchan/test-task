@@ -23,7 +23,9 @@
     "prepare": "husky install",
     "commit": "commit",
     "format": "prettier --write --ignore-unknown .",
-    "lint": "eslint --cache ./src"
+    "lint": "eslint --cache ./src",
+    "sass:watch": "sass --watch src/styles/main.scss:src/styles/style.css"
+
   },
   "dependencies": {
     "react": "^18.2.0",
