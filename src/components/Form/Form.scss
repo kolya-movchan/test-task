@@ -1,5 +1,48 @@
 .form {
   padding: 0 16px;
+
+  &__contact-details {
+    margin-bottom: 29px;
+  }
+
+  &__text-input {
+    margin-bottom: 50px;
+  }
+
+  &__input-phone .input {
+    background-color: red;
+    margin: 0;
+  }
+
+  &__input-phone-hint {
+    font-size: 12px;
+    line-height: 14px;
+    color: $placeholder;
+  }
+
+  .input {
+    padding: 16px 14px;
+
+    height: 54px;
+    width: 100%;
+    border: 1px solid #d0cfcf;
+    border-radius: 4px;
+    background-color: $bg-color;
+
+    &::placeholder {
+      color: $placeholder;
+    }
+  }
+
+  &__position-title {
+    margin-bottom: 11px;
+
+    font-size: $text-size;
+    line-height: $text-lh-size-1;
+  }
+
+  .positions {
+    display: flex;
+    flex-direction: column;
+  }
 }
-
-

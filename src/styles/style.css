@@ -1,4 +1,4 @@
-.header .logo-container {
+.user-card, .testimonials__users, .banner, .header .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +10,7 @@ body {
   min-width: 360px;
   font-family: "Nunito", sans-serif;
   font-weight: 400;
+  color: rgba(0, 0, 0, 0.8705882353);
   background-color: #f8f8f8;
 }
 
@@ -19,6 +20,10 @@ body {
   font-style: normal;
   font-size: 40px;
   line-height: 40px;
+}
+
+.loader {
+  background-color: #00bdd3;
 }
 
 .header {
@@ -53,6 +58,26 @@ body {
   gap: 10px;
 }
 
+.banner {
+  margin-bottom: 140px;
+  flex-direction: column;
+  padding: 0 16px;
+  height: calc(100vh - 60px);
+  color: #fff;
+  background-image: url(../../../public/ukraine-360.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.banner__title {
+  margin-bottom: 21px;
+}
+.banner__text {
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 26px;
+}
+
 .button {
   width: 100px;
   height: 34px;
@@ -66,7 +91,53 @@ body {
 }
 
 .testimonials {
+  margin-bottom: 140px;
+  padding: 0;
+}
+.testimonials__title {
+  word-break: normal;
+}
+.testimonials__users {
   padding: 0 16px;
+  flex-direction: column;
+  gap: 20px;
+  word-break: break-all;
+}
+
+.user-card {
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  font-size: 16px;
+  line-height: 26px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.user-card:last-of-type {
+  margin-bottom: 30px;
+}
+.user-card__photo-img {
+  border-radius: 50%;
+}
+
+.form {
+  padding: 0 16px;
+}
+.form__input-phone-hint {
+  font-size: 12px;
+  line-height: 14px;
+}
+.form .input {
+  padding: 16px 14px;
+  height: 54px;
+  width: 100%;
+  border: 1px solid #d0cfcf;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+}
+.form .input::placeholder {
+  color: #7e7e7e;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 import { User } from "./User";
 
-export interface ServerResponse {
+export interface UsersResponse {
   count: number,
   links: { next_url: string },
   prev_url: string | null,

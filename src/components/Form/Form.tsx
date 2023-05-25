@@ -1,8 +1,31 @@
 // import React from 'react'
 
+import { item } from "api/api"
 import { Button } from "components/Button"
+import { useEffect, useState } from "react"
+import { Position } from "types/Position";
+import { PositionResponse } from "types/PositionResponse";
 
 export const Form = () => {
+  const [positions, setPositions] = useState<Position[]>();
+
+  const loadPositions = async () => {
+    try {
+      const response = await item.get<PositionResponse>('/positions');
+
+      console.log(response.positions);
+
+      setPositions(response.positions)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    loadPositions();
+  }, []);
+
   return (
     <div className="form">
       <div className="form__content">
@@ -10,50 +33,55 @@ export const Form = () => {
           Working with POST request
         </h1>
 
-        <input type="text" className="input form__text-input" />
-        <input type="text" className="input form__text-input" />
-        <input type="text" className="input form__text-input" />
+        <div className="form__contact-details">
+          <input
+            type="text"
+            className="input form__text-input"
+            placeholder="Your name"
+          />
+
+          <input
+            type="text"
+            className="input form__text-input"
+            placeholder="Email"
+            />
+
+          <div className="form__input-phone">
+            <input
+              type="text"
+              className="input form__text-input"
+              placeholder="Phone"
+            />
+
+            <span className="form__input-phone-hint">
+              +38 (XXX) XXX - XX - XX
+            </span>
+          </div>
+        </div>
 
         <div className="position form__position">
           <h2 className="form__position-title">
             Select your position
           </h2>
 
-          <label className="form__checkbox">
-            <input
-              type="checkbox"
-              name=""
-              className="form__checkbox-input"
-            />
-            Frontend developer
-          </label>
+          <div className="positions">
+            {positions && (
+              positions.map(position => {
+                const { id, name } = position;
 
-          <label className="form__checkbox">
-            <input
-              type="checkbox"
-              name=""
-              className="form__checkbox-input"
-            />
-            Backend developer
-          </label>
-
-          <label className="form__checkbox">
-            <input
-              type="checkbox"
-              name=""
-              className="form__checkbox-input"
-            />
-            Designer
-          </label>
-
-          <label className="form__checkbox">
-            <input
-              type="checkbox"
-              name=""
-              className="form__checkbox-input"
-            />
-            QA
-          </label>
+                return (
+                  <label className="form__checkbox" key={id}>
+                    <input
+                      type="checkbox"
+                      name={name}
+                      className="form__checkbox-input"
+                    />
+                      {name}
+                  </label>
+                )
+              })
+            )}
+          </div>
         </div>
 
         <div className="form__photo-container">

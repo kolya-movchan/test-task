@@ -6,7 +6,7 @@ import { item } from "api/api";
 import { Button } from "components/Button";
 import { UserCard } from "components/UserCard";
 import { useEffect, useState } from "react";
-import { ServerResponse } from "types/ServerResponse";
+import { UsersResponse } from "types/UsersResponse";
 import { User } from "types/User";
 
 export const Testimonials = () => {
@@ -22,19 +22,19 @@ export const Testimonials = () => {
       return;
     }
 
-    setIsLoading(true);
-
-    const response = await item.get<ServerResponse>(`/users?page=${page + 1}&count=6`);
-
     try {
-      const { users: usersFromServer, page, total_pages } = response;
+      setIsLoading(true);
+
+      const response: UsersResponse = await item.get<UsersResponse>(`/users?page=${page + 1}&count=6`);
+
+      const { users: usersFromServer, page: currentPage, total_pages } = response;
 
       const sortedUsers = usersFromServer.sort((user1, user2) => (
         user1.registration_timestamp - user2.registration_timestamp)
       );
 
       setUsers([...users, ...sortedUsers]);
-      setPage(page);
+      setPage(currentPage);
       setTotalPages(total_pages);
     } catch {
       console.log('error');
@@ -57,19 +57,22 @@ export const Testimonials = () => {
         Working with GET request
       </h1>
 
-      {users.map(user => <UserCard key={user.id} user={user} />)}
+      <div className="testimonials__users">
+        {users.map(user => <UserCard key={user.id} user={user} />)}
 
-      {isLoading && (
+        {isLoading && (
         <ReactLoading type="spin" color='#00bdd3' height={40} width={40} />
-      )}
+        )}
 
-      {!reachedLimit && (
-        <Button
-        text="Show more"
-        color="yellow"
-        onClick={handleClick}
-        />
-      )}
+
+        {!reachedLimit && (
+          <Button
+          text="Show more"
+          color="yellow"
+          onClick={handleClick}
+          />
+        )}
+      </div>
     </div>
   )
 }
