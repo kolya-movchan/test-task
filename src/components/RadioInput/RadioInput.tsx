@@ -13,11 +13,13 @@ export const RadioInput: React.FC<Props> = ({ value, checked, onSelect }) => {
           type="radio"
           name={value}
           value={value}
-          className="form__radio-input"
+          className="form__radio-input radio"
           checked={checked === value}
           onChange={(event) => onSelect(event.currentTarget.value)}
         />
-        {value}
+        <span className="radio-title">
+          {value}
+        </span>
       </label>
   )
 }

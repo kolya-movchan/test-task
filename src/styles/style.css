@@ -160,4 +160,23 @@ body {
   flex-direction: column;
 }
 
+.radio + label {
+  display: inline-block;
+  position: relative;
+  padding-left: 25px; /* Adjust as needed */
+  cursor: pointer;
+}
+
+.radio + label::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 16px; /* Adjust as needed */
+  height: 16px; /* Adjust as needed */
+  border-radius: 50%;
+  border: 2px solid #aaa; /* Adjust border color */
+  background-color: #fff; /* Adjust background color */
+}
+
 /*# sourceMappingURL=style.css.map */

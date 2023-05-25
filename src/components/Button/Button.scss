@@ -6,8 +6,18 @@
   line-height: $text-lh-size-1;
   background-color: $primary-color;
   border-radius: 80px;
-
+  transition: background-color 0.3s;
   &--yellow {
     color: $color-dark;
+  }
+
+  &:hover {
+    background-color: $button-hover;
+  }
+
+  &:disabled {
+    background-color: $button-disabled;
+    color: $color-light;
+    cursor: not-allowed;
   }
 }
