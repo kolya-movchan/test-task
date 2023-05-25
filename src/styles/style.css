@@ -124,9 +124,20 @@ body {
 .form {
   padding: 0 16px;
 }
+.form__contact-details {
+  margin-bottom: 29px;
+}
+.form__text-input {
+  margin-bottom: 50px;
+}
+.form__input-phone .input {
+  background-color: red;
+  margin: 0;
+}
 .form__input-phone-hint {
   font-size: 12px;
   line-height: 14px;
+  color: #7e7e7e;
 }
 .form .input {
   padding: 16px 14px;
@@ -138,6 +149,15 @@ body {
 }
 .form .input::placeholder {
   color: #7e7e7e;
+}
+.form__position-title {
+  margin-bottom: 11px;
+  font-size: 16px;
+  line-height: 26px;
+}
+.form .positions {
+  display: flex;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=style.css.map */

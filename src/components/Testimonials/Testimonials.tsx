@@ -57,7 +57,7 @@ export const Testimonials = () => {
         Working with GET request
       </h1>
 
-      <div className="testimonials__users">
+      {/* <div className="testimonials__users">
         {users.map(user => <UserCard key={user.id} user={user} />)}
 
         {isLoading && (
@@ -72,7 +72,7 @@ export const Testimonials = () => {
           onClick={handleClick}
           />
         )}
-      </div>
+      </div> */}
     </div>
   )
 }
