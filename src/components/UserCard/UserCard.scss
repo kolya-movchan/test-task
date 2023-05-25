@@ -1,0 +1,20 @@
+.user-card {
+  @extend %flex-center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+
+  font-size: $text-size;
+  line-height: $text-lh-size-1;
+  background-color: $color-light;
+  border-radius: 10px;
+
+  &:last-of-type {
+    margin-bottom: 30px;
+  }
+
+  &__photo-img {
+    border-radius: 50%;
+  }
+}

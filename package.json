@@ -25,12 +25,12 @@
     "format": "prettier --write --ignore-unknown .",
     "lint": "eslint --cache ./src",
     "sass:watch": "sass --watch src/styles/main.scss:src/styles/style.css"
-
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
+    "react-loading": "^2.0.3",
     "vite-plugin-svgr": "2.4.0"
   },
   "devDependencies": {
