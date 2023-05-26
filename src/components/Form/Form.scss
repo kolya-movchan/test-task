@@ -6,8 +6,8 @@
     margin-bottom: 29px;
   }
 
-  &__text-input {
-    margin-bottom: 50px;
+  &__input-container {
+    margin-bottom: 20px;
   }
 
   &__input-phone .input {
@@ -56,32 +56,52 @@
     @extend %flex-center;
   }
 
-  .input {
-    padding: 16px 14px;
-
-    height: 54px;
-    width: 100%;
-    border: 1px solid #d0cfcf;
-    border-radius: 4px;
-    background-color: $bg-color;
-
-    &::placeholder {
-      color: $placeholder;
-    }
-
-    &--file {
-      border-left: none;
-      border-radius: 0 4px 4px 0;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    &--loaded::placeholder {
-      color: $color-dark;
-    }
+  &__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
   }
+
+  .legend-title {
+    position: absolute;
+    top: -7px;
+    left: 12px;
+    padding: 0 4px;
+
+    font-size: $text-size-legend;
+    font-weight: 500;
+    line-height: $text-lh-legend;
+    color: $error-color;
+    background-color: $bg-color;
+  }
+
+  // .input {
+  //   padding: 16px 14px;
+
+  //   height: 54px;
+  //   width: 100%;
+  //   border: 1px solid #d0cfcf;
+  //   border-radius: 4px;
+  //   background-color: $bg-color;
+
+  //   &::placeholder {
+  //     color: $placeholder;
+  //   }
+
+  //   &--file {
+  //     border-left: none;
+  //     border-radius: 0 4px 4px 0;
+
+  //     input &:focus {
+  //       outline-color: none;
+  //     }
+  //   }
+
+  //   &--loaded::placeholder {
+  //     color: $color-dark;
+  //   }
+  // }
 
   .positions {
     display: flex;

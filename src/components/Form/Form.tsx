@@ -3,13 +3,14 @@ import { item } from "api/api"
 import { Button } from "components/Button"
 import { Input } from "components/Input"
 import { RadioInput } from "components/RadioInput"
-import { ChangeEvent, useEffect, useState } from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 import { Position } from "types/Position"
 import { Position as PositionType } from "types/PositionList"
 import { PositionResponse } from "types/PositionResponse"
 import classnames from 'classnames'
 import { emailValidation, phoneValidation } from 'utils/regex'
-import { Formik } from 'formik';
+import { Error } from '../../types/Error';
+import { Helper } from "types/Helper"
 
 
 export const Form = () => {
@@ -20,6 +21,8 @@ export const Form = () => {
   const [selectedOption, setSelectedOption] = useState(PositionType.LAWYER);
   const [selectedOptionId, setSelectedOptionId] = useState<number | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const loadPositions = async () => {
     try {
@@ -121,7 +124,29 @@ export const Form = () => {
     return true;
   }
 
-  const handleSubmit = () => {
+  const validateInputName = () => {
+    if (name.length < 2) {
+      setIsError(true);
+      setErrorText(Error.SHORTNAME)
+
+      return
+    }
+
+    if (name.length === 60) {
+      setIsError(true);
+      setErrorText(Error.LONGNAME)
+
+      return
+    }
+
+    setIsError(false);
+  }
+
+  const handleSubmit = (event: React.FormEvent) => {
+    console.log(1);
+    
+    event.preventDefault();
+
     if (!validateData()) {
       return
     }
@@ -142,7 +167,7 @@ export const Form = () => {
   }, []);
 
   return (
-    <div className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <div className="form__content">
         <h1 className="title form__title">
           Working with POST request
@@ -152,17 +177,21 @@ export const Form = () => {
           <Input
             placeholder="Your name"
             value={name}
-            onQuery={handleNameInput}
-            minLength={2}
             maxLength={60}
+            onQuery={handleNameInput}
+            onBlur={validateInputName}
+            isError={isError}
+            errorText={errorText}
+            helperText={Helper.NAME}
             />
 
           <Input
             placeholder="Email"
             value={email}
-            onQuery={handleEmailInput}
             minLength={2}
             maxLength={100}
+            onQuery={handleEmailInput}
+            onBlur={validateInputName}
           />
 
           <div className="form__input-phone">
@@ -170,6 +199,7 @@ export const Form = () => {
               placeholder="Phone"
               value={phone}
               onQuery={handlePhoneInput}
+              onBlur={validateInputName}
             />
 
             <span className="form__input-phone-hint">
@@ -231,11 +261,12 @@ export const Form = () => {
           <Button
             text="Sign Up"
             color="grey"
-            onClick={handleSubmit}
+            type="submit"
+            // onClick={handleSubmit}
             disabled={false}
           />
         </div>
       </div>
-    </div>
+    </form>
   )
 }

@@ -1,0 +1,32 @@
+.input.input-error {
+  border: 2px solid $error-color;
+}
+
+.input {
+  padding: 16px 14px;
+
+  height: 54px;
+  width: 100%;
+  border: 1px solid #d0cfcf;
+  border-radius: 4px;
+  background-color: $bg-color;
+  outline: none;
+
+  &::placeholder {
+    color: $placeholder;
+  }
+
+  &--file {
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &--loaded::placeholder {
+    color: $color-dark;
+  }
+}

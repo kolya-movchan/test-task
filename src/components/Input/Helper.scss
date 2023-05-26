@@ -1,0 +1,14 @@
+.helper {
+  min-height: 26px;
+  padding-left: 16px;
+
+  &--info {
+    font-size: $text-size-legend;
+    line-height: $text-lh-legend;
+    color: $placeholder;
+  }
+
+  &--error {
+    color: $error-color;
+  }
+}

@@ -3,23 +3,26 @@ import React from 'react';
 type Props = {
   text: string,
   color: string,
-  onClick: () => void,
+  onClick?: () => void,
   disabled?: boolean,
+  type?: string,
 } 
 
 export const Button: React.FC<Props> = ({
   text,
   color,
   onClick,
-  disabled = false
+  disabled = false,
+  type = 'button'
 }) => {
   return (
   <button
     className={`button button--${color}`}
-    onClick={(event) => {
-      event.preventDefault();
-      onClick();
-    }}
+    // onClick={(event) => {
+    //   event.preventDefault();
+    //   onClick();
+    // }}
+    type={type === 'submit' ? "submit" : "button"}
     disabled={disabled}
   >
     {text}
