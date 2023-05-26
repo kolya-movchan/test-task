@@ -18,10 +18,7 @@ export const Button: React.FC<Props> = ({
   return (
   <button
     className={`button button--${color}`}
-    // onClick={(event) => {
-    //   event.preventDefault();
-    //   onClick();
-    // }}
+    onClick={onClick}
     type={type === 'submit' ? "submit" : "button"}
     disabled={disabled}
   >

@@ -27,10 +27,12 @@ export const Testimonials = () => {
 
       const response: UsersResponse = await item.get<UsersResponse>(`/users?page=${page + 1}&count=6`);
 
+      // console.log(response);
+
       const { users: usersFromServer, page: currentPage, total_pages } = response;
 
       const sortedUsers = usersFromServer.sort((user1, user2) => (
-        user1.registration_timestamp - user2.registration_timestamp)
+        user2.registration_timestamp - user1.registration_timestamp)
       );
 
       setUsers([...users, ...sortedUsers]);
@@ -57,7 +59,7 @@ export const Testimonials = () => {
         Working with GET request
       </h1>
 
-      {/* <div className="testimonials__users">
+      <div className="testimonials__users">
         {users.map(user => <UserCard key={user.id} user={user} />)}
 
         {isLoading && (
@@ -72,7 +74,7 @@ export const Testimonials = () => {
           onClick={handleClick}
           />
         )}
-      </div> */}
+      </div>
     </div>
   )
 }

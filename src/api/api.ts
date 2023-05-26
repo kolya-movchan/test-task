@@ -8,8 +8,9 @@ function wait(delay: number) {
   });
 }
 
-type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
-type Data = null;
+type RequestMethod = 'GET' | 'POST';
+// type Data = UserForPost | FormData | null;
+type Data = FormData | null;
 
 function request<T>(
   url: string,
@@ -19,9 +20,12 @@ function request<T>(
   const options: RequestInit = { method };
 
   if (data) {
-    options.body = JSON.stringify(data);
+    console.log(data);
+    
+    options.body = data;
+    // options.body = JSON.stringify(data);
     options.headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Token': localStorage.getItem('tokenKey') || '',
     };
   }
 
@@ -29,9 +33,13 @@ function request<T>(
   return wait(0)
     .then(() => fetch(BASE_URL + url, options))
     .then(response => {
-      if (!response.ok) {
-        throw new Error();
-      }
+      // if (options.body) {
+      //   console.log(response);
+      // }
+
+      // if (!response.ok) {
+      //   throw new Error();
+      // }
 
       return response.json();
     });
@@ -41,11 +49,8 @@ export const item = {
   get: function <T>(url: string) {
     return request<T>(url);
   },
-  // post: function <T>(url: string, data: Data) {
-  //   return request<T>(url, 'POST', data);
-  // },
-  // delete: (url: string) => request(url, 'DELETE'),
-  // put: function<T>(url: string, data?: CFPforUpdate) {
-  //   return request<T>(url, 'PUT', data);
-  // },
+
+  post: function <T>(url: string, data: Data) {
+    return request<T>(url, 'POST', data);
+  },
 };

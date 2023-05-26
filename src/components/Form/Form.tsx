@@ -11,7 +11,7 @@ import { PositionResponse } from "types/PositionResponse"
 import { emailValidation, phoneValidation } from 'utils/regex'
 import { Error, ErrorObject } from '../../types/Error';
 import { Helper } from "types/Helper"
-
+import { Token } from "types/TokenResponse"
 
 export const Form = () => {
   const [positions, setPositions] = useState<Position[]>();
@@ -19,7 +19,7 @@ export const Form = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedOption, setSelectedOption] = useState(PositionType.LAWYER);
-  const [selectedOptionId, setSelectedOptionId] = useState<number | null>(null);
+  const [selectedOptionId, setSelectedOptionId] = useState<number>(1);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const initial: ErrorObject = {
@@ -39,11 +39,20 @@ export const Form = () => {
     try {
       const response = await item.get<PositionResponse>('/positions');
 
+      console.log(response);
+      
+
       setPositions(response.positions)
       
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const loadToken = async () => {
+    const token = await item.get<Token>('/token');
+
+    localStorage.setItem('tokenKey', token.token);
   }
 
   const handleNameInput = (value: string) => {
@@ -83,7 +92,7 @@ export const Form = () => {
         break;
 
 
-      default: setSelectedOptionId(null);
+      default: setSelectedOptionId(1);
     }
   };
 
@@ -94,16 +103,6 @@ export const Form = () => {
       setSelectedFile(file || null);
     }
   };
-
-  const validateData = () => {
-    const acceptedData = name;
-
-    if (!acceptedData) {
-      return false
-    }
-
-    return true;
-  }
 
   const validateInputName = () => {
     if (!name.length) {
@@ -220,7 +219,7 @@ export const Form = () => {
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5e+6; // 5MB
 
       if (selectedFile.size > maxSize) {
         setError({
@@ -270,29 +269,27 @@ export const Form = () => {
     }
 
     return true;
-  }
+  }  
 
-  console.log(enableSubmit());
-  
-
-  const handleSubmit = (event: React.FormEvent) => {
-    console.log(1);
-    
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+  
+    const formData = new FormData();
 
-    if (!validateData()) {
-      return
-    }
-    
-    const newUser = {
-      name,
-      email,
-      phone,
-      position_id: selectedOptionId,
-      photo: selectedFile,
-    }
+    formData.append('position_id', selectedOptionId.toString());
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('photo', selectedFile as File);
 
-    console.log('newUser', newUser);
+    try {
+      const response = await item.post('/users', formData);
+
+      console.log(response);
+      
+    } catch (error) {
+      console.log(error);
+    } 
   }
 
   const {
@@ -308,6 +305,7 @@ export const Form = () => {
 
   useEffect(() => {
     loadPositions();
+    loadToken();
   }, []);
 
   useEffect(() => {
