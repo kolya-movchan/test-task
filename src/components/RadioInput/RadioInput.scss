@@ -11,11 +11,15 @@
   height: 16px;
   outline: none;
   border-radius: 50%;
-  border: 1px solid $secondary-color;
+  border: 1px solid $unchecked-color;
   background-color: $color-light;
 
-  &:checked::after {
-    visibility: visible;
+  &:checked {
+    border: 1px solid $secondary-color;
+
+    &::after {
+      visibility: visible;
+    }
   }
 
   &::after {
