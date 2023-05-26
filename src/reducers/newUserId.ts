@@ -3,7 +3,7 @@ import { Reducer } from "types/Reducer";
 type Add = { type: typeof Reducer.NEWUSERID, payload: number };
 type Remove = { type: typeof Reducer.REMOVEDUSERID };
 
-type Action = Add;
+type Action = Add | Remove;
 
 export const add = (id: number): Add => ({
     type: Reducer.NEWUSERID,
