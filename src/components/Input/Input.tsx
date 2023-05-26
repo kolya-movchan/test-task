@@ -8,8 +8,8 @@ type Props = {
   maxLength?: number,
   onQuery: (value: string) => void,
   onBlur: () => void,
-  isError: boolean,
-  errorText: string,
+  isError: boolean | string,
+  errorText: string | boolean,
   helperText: string,
 }
 

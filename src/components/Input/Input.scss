@@ -1,5 +1,10 @@
-.input.input-error {
+.input.input-error,
+.form__file.input-error {
   border: 2px solid $error-color;
+}
+
+.input--file.input-error {
+  border-left: none;
 }
 
 .input {

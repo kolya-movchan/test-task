@@ -2,14 +2,14 @@
 import { item } from "api/api"
 import { Button } from "components/Button"
 import { Input } from "components/Input"
+import { File as FileInput } from "components/File"
 import { RadioInput } from "components/RadioInput"
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { Position } from "types/Position"
 import { Position as PositionType } from "types/PositionList"
 import { PositionResponse } from "types/PositionResponse"
-import classnames from 'classnames'
 import { emailValidation, phoneValidation } from 'utils/regex'
-import { Error } from '../../types/Error';
+import { Error, ErrorObject } from '../../types/Error';
 import { Helper } from "types/Helper"
 
 
@@ -21,8 +21,19 @@ export const Form = () => {
   const [selectedOption, setSelectedOption] = useState(PositionType.LAWYER);
   const [selectedOptionId, setSelectedOptionId] = useState<number | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isError, setIsError] = useState(false);
-  const [errorText, setErrorText] = useState('');
+
+  const initial: ErrorObject = {
+    errorName: false,
+    errorTextName: '',
+    errorEmail: false,
+    errorTextEmail: '',
+    errorPhone: false,
+    errorTextPhone: '',
+    errorFile: false,
+    errorTextFile: ''
+  }
+
+  const [error, setError] = useState(initial);
 
   const loadPositions = async () => {
     try {
@@ -79,27 +90,145 @@ export const Form = () => {
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
-    setSelectedFile(file || null);
+    if (file) {
+      setSelectedFile(file || null);
+    }
   };
 
   const validateData = () => {
+    const acceptedData = name;
+
+    if (!acceptedData) {
+      return false
+    }
+
+    return true;
+  }
+
+  const validateInputName = () => {
+    if (!name.length) {
+      setError({
+        ...error,
+        errorName: true,
+        errorTextName: Error.NONAME,
+      });
+
+      return
+    }
+
+    if (name.length < 2) {
+      setError({
+        ...error,
+        errorName: true,
+        errorTextName: Error.SHORTNAME,
+      });
+
+      return
+    }
+
+    if (name.length === 60) {
+      setError({
+        ...error,
+        errorName: true,
+        errorTextName: Error.LONGNAME,
+      });
+
+      return
+    }
+
+    setError({
+      ...error,
+      errorName: false,
+      errorTextName: '',
+    });
+  }
+
+  const validateInputEmail = () => {
     const isValidEmail = emailValidation.test(email);
+
+    if (!email) {
+      setError({
+        ...error,
+        errorEmail: true,
+        errorTextEmail: Error.NOEMAIL,
+      });
+
+      return
+    }
+
+    if (!isValidEmail) {
+      setError({
+        ...error,
+        errorEmail: true,
+        errorTextEmail: Error.WRONGEMAIL,
+      });
+
+      return
+    }
+
+    setError({
+      ...error,
+      errorEmail: false,
+      errorTextEmail: '',
+    });
+  }
+
+  const validateInputPhone = () => {
     const isValidPhone = phoneValidation.test(phone);
 
-    console.log('isValidEmail', isValidEmail);
-    console.log('isValidPhone', isValidPhone);
+    if (!phone) {
+      setError({
+        ...error,
+        errorPhone: true,
+        errorTextPhone: Error.NOPHONE,
+      });
+
+      return
+    }
+
+    if (!isValidPhone) {
+      setError({
+        ...error,
+        errorPhone: true,
+        errorTextPhone: Error.WRONGPHONEFORMAT,
+      });
+
+      return
+    }
+
+    setError({
+      ...error,
+      errorPhone: false,
+      errorTextPhone: '',
+    });
+  }
+
+  const validateInputFile = () => {
+    if (!selectedFile) {
+      return
+    }
 
     const allowedFormats = ['image/jpeg', 'image/jpg'];
 
-    if (selectedFile && !allowedFormats.includes(selectedFile.type)) {
-      // setError('Please select a JPEG/JPG image file.');
+    if (!allowedFormats.includes(selectedFile.type)) {
+      setError({
+        ...error,
+        errorFile: true,
+        errorTextFile: Error.FILEFORMAT,
+      });
+
       return;
     }
 
     const maxSize = 5 * 1024 * 1024; // 5MB
 
-      if (selectedFile && selectedFile.size > maxSize) {
-        // setError('The file size should not exceed 5MB.');
+      if (selectedFile.size > maxSize) {
+        setError({
+          ...error,
+          errorFile: true,
+          errorTextFile: Error.FILESIZE,
+        });
+
         return;
       }
 
@@ -110,37 +239,41 @@ export const Form = () => {
     img.onload = () => {
       // Check minimum dimensions
       if (img.width < 70 || img.height < 70) {
-        // setError('The photo should have a minimum size of 70x70 pixels.');
+        setError({
+          ...error,
+          errorFile: true,
+          errorTextFile: Error.FILERESOLUTION,
+        });
+
         return;
       }
     }
 
-    const acceptedData = name && isValidEmail && isValidPhone;
+    setError({
+      ...error,
+      errorFile: false,
+      errorTextFile: '',
+    });
+  }
 
-    if (!acceptedData) {
+  const enableSubmit = () => {
+    const allFilledIn = name && email && phone && selectedOption && selectedFile;
+
+    if (!allFilledIn) {
       return false
+    }
+
+    for (const key in error) {
+      if (typeof error[key] === "boolean" && error[key] === true) {
+        return false
+      }
     }
 
     return true;
   }
 
-  const validateInputName = () => {
-    if (name.length < 2) {
-      setIsError(true);
-      setErrorText(Error.SHORTNAME)
-
-      return
-    }
-
-    if (name.length === 60) {
-      setIsError(true);
-      setErrorText(Error.LONGNAME)
-
-      return
-    }
-
-    setIsError(false);
-  }
+  console.log(enableSubmit());
+  
 
   const handleSubmit = (event: React.FormEvent) => {
     console.log(1);
@@ -162,9 +295,24 @@ export const Form = () => {
     console.log('newUser', newUser);
   }
 
+  const {
+    errorName,
+    errorEmail,
+    errorPhone,
+    errorTextName,
+    errorTextEmail,
+    errorTextPhone,
+    errorFile,
+    errorTextFile,
+  } = error;
+
   useEffect(() => {
     loadPositions();
   }, []);
+
+  useEffect(() => {
+    validateInputFile()
+  }, [selectedFile])
 
   return (
     <form className="form" onSubmit={handleSubmit}>
@@ -180,8 +328,8 @@ export const Form = () => {
             maxLength={60}
             onQuery={handleNameInput}
             onBlur={validateInputName}
-            isError={isError}
-            errorText={errorText}
+            isError={errorName}
+            errorText={errorTextName}
             helperText={Helper.NAME}
             />
 
@@ -191,7 +339,10 @@ export const Form = () => {
             minLength={2}
             maxLength={100}
             onQuery={handleEmailInput}
-            onBlur={validateInputName}
+            onBlur={validateInputEmail}
+            isError={errorEmail}
+            errorText={errorTextEmail}
+            helperText={Helper.EMAIL}
           />
 
           <div className="form__input-phone">
@@ -199,12 +350,11 @@ export const Form = () => {
               placeholder="Phone"
               value={phone}
               onQuery={handlePhoneInput}
-              onBlur={validateInputName}
+              onBlur={validateInputPhone}
+              isError={errorPhone}
+              errorText={errorTextPhone}
+              helperText={Helper.PHONE}
             />
-
-            <span className="form__input-phone-hint">
-              +38 (XXX) XXX - XX - XX
-            </span>
           </div>
         </div>
 
@@ -232,38 +382,20 @@ export const Form = () => {
           </ul>
         </div>
 
-        <div className="form__photo-container">
-          <label htmlFor="photoUpload" className="form__file">
-            Upload
-          </label>
-
-          <input
-            id="photoUpload"
-            type="file"
-            accept="image/*"
-            onChange={handleFileUpload}
-            style={{ display: 'none' }}
-          />
-
-          <input
-            className={
-              classnames(
-                'input input--file',
-                { 'input--loaded': selectedFile }
-              )
-            }
-            placeholder={!selectedFile ? 'Upload your photo' : selectedFile.name}
-            readOnly
-          />
-         </div>
+        <FileInput
+          selectedFile={selectedFile}
+          onUpload={handleFileUpload}
+          onBlur={validateInputFile}
+          isError={errorFile}
+          errorText={errorTextFile}
+        />
 
         <div className="form__submit">
           <Button
             text="Sign Up"
             color="grey"
             type="submit"
-            // onClick={handleSubmit}
-            disabled={false}
+            disabled={!enableSubmit()}
           />
         </div>
       </div>
