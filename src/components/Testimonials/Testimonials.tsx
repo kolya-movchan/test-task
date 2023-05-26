@@ -8,16 +8,26 @@ import { UserCard } from "components/UserCard";
 import { useEffect, useState } from "react";
 import { UsersResponse } from "types/UsersResponse";
 import { User } from "types/User";
+import { RootState } from 'utils/store';
+import { actions } from 'reducers/newUserId';
+import { useDispatch, useSelector } from "react-redux"
 
 export const Testimonials = () => {
+  const dispatch = useDispatch();
+
+  const newUserId = useSelector<RootState, number>((state) => state.newUserId)
+
+  console.log('newUserId', newUserId);
+  
+
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(-1);
   const [isLoading, setIsLoading] = useState(false);
 
   const reachedLimit = page === totalPages;
-
-  const loadSpecialists = async() => {
+ 
+  const loadSpecialists = async (nextPage = 1) => {
     if (reachedLimit) {
       return;
     }
@@ -25,33 +35,48 @@ export const Testimonials = () => {
     try {
       setIsLoading(true);
 
-      const response: UsersResponse = await item.get<UsersResponse>(`/users?page=${page + 1}&count=6`);
-
-      // console.log(response);
+      const response: UsersResponse = await item.get<UsersResponse>(`/users?page=${nextPage}&count=6`);
 
       const { users: usersFromServer, page: currentPage, total_pages } = response;
 
       const sortedUsers = usersFromServer.sort((user1, user2) => (
         user2.registration_timestamp - user1.registration_timestamp)
       );
+      
+      console.log(nextPage, 'nextPAGE');
+      console.log(newUserId, 'newUserId');
+      console.log(newUserId > 0, nextPage === 1);
+      // console.log('DISPATCH');
+      // console.log(dispatch(actions.remove()));
+      // console.log('DISPATCH');
+      
+      
+      if (nextPage === 1 && newUserId > 0) {
+        setUsers(sortedUsers);
+        dispatch(actions.remove())
+        console.log('dispatch');
+      } else {
+        setUsers([...users, ...sortedUsers]);
+      }
 
-      setUsers([...users, ...sortedUsers]);
       setPage(currentPage);
       setTotalPages(total_pages);
     } catch {
-      console.log('error');
+      console.log('errorHERE');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleClick = () => {
-    loadSpecialists();
+    const nextPage = page + 1;
+
+    loadSpecialists(nextPage);
   }
 
   useEffect(() => {
     loadSpecialists();
-  }, []);
+  }, [newUserId]);
 
   return (
     <div className="testimonials">

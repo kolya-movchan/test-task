@@ -27,12 +27,17 @@
     "sass:watch": "sass --watch src/styles/main.scss:src/styles/style.css"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
     "classnames": "^2.3.2",
-    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-loading": "^2.0.3",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
     "vite-plugin-svgr": "2.4.0"
   },
   "devDependencies": {

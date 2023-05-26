@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 import { item } from "api/api"
 import { Button } from "components/Button"
 import { Input } from "components/Input"
@@ -12,8 +11,13 @@ import { emailValidation, phoneValidation } from 'utils/regex'
 import { Error, ErrorObject } from '../../types/Error';
 import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
+import { UserPostResponse } from "types/UserPostResponse"
+import { useDispatch } from "react-redux"
+import { actions } from "reducers/newUserId"
 
 export const Form = () => {
+  const dispatch = useDispatch();
+
   const [positions, setPositions] = useState<Position[]>();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,9 +42,6 @@ export const Form = () => {
   const loadPositions = async () => {
     try {
       const response = await item.get<PositionResponse>('/positions');
-
-      console.log(response);
-      
 
       setPositions(response.positions)
       
@@ -283,9 +284,9 @@ export const Form = () => {
     formData.append('photo', selectedFile as File);
 
     try {
-      const response = await item.post('/users', formData);
+      const response = await item.post<UserPostResponse>('/users', formData);
 
-      console.log(response);
+      dispatch(actions.add(response.user_id))
       
     } catch (error) {
       console.log(error);
