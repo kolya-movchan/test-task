@@ -342,89 +342,85 @@ export const Form = () => {
       id="registering"
       onSubmit={handleSubmit}
     >
-      <div className="form__content">
-        <h1 className="title form__title">
-          Working with POST request
-        </h1>
 
-        <div className="form__contact-details">
-          <Input
-            placeholder="Your name"
-            value={name}
-            maxLength={60}
-            onQuery={handleNameInput}
-            onBlur={validateInputName}
-            isError={errorName}
-            errorText={errorTextName}
-            helperText={Helper.NAME}
-            />
+      <h1 className="title form__title">
+        Working with POST request
+      </h1>
 
-          <Input
-            placeholder="Email"
-            value={email}
-            minLength={2}
-            maxLength={100}
-            onQuery={handleEmailInput}
-            onBlur={validateInputEmail}
-            isError={errorEmail}
-            errorText={errorTextEmail}
-            helperText={Helper.EMAIL}
-          />
-
-          <div className="form__input-phone">
+      <div className="form__container">
+        <div className="form__container">
+          <div className="form__contact-details">
             <Input
-              placeholder="Phone"
-              value={phone}
-              onQuery={handlePhoneInput}
-              onBlur={validateInputPhone}
-              isError={errorPhone}
-              errorText={errorTextPhone}
-              helperText={Helper.PHONE}
+              placeholder="Your name"
+              value={name}
+              maxLength={60}
+              onQuery={handleNameInput}
+              onBlur={validateInputName}
+              isError={errorName}
+              errorText={errorTextName}
+              helperText={Helper.NAME}
+              />
+            <Input
+              placeholder="Email"
+              value={email}
+              minLength={2}
+              maxLength={100}
+              onQuery={handleEmailInput}
+              onBlur={validateInputEmail}
+              isError={errorEmail}
+              errorText={errorTextEmail}
+              helperText={Helper.EMAIL}
+            />
+            <div className="form__input-phone">
+              <Input
+                placeholder="Phone"
+                value={phone}
+                onQuery={handlePhoneInput}
+                onBlur={validateInputPhone}
+                isError={errorPhone}
+                errorText={errorTextPhone}
+                helperText={Helper.PHONE}
+              />
+            </div>
+          </div>
+          <div className="position form__position">
+            <h2 className="form__position-title">
+              Select your position
+            </h2>
+            <ul className="positions">
+              {positions && (
+                positions.map(position => {
+                  const { id, name } = position;
+                  return (
+                    <li className="form__radio" key={id}>
+                      <RadioInput
+                        value={name}
+                        checked={selectedOption}
+                        onSelect={handleOptionChange}
+                      />
+                    </li>
+                  )
+                })
+              )}
+            </ul>
+          </div>
+          <FileInput
+            selectedFile={selectedFile}
+            onUpload={handleFileUpload}
+            onBlur={validateInputFile}
+            isError={errorFile}
+            errorText={errorTextFile}
+          />
+          <div className="form__submit">
+            <Button
+              text="Sign Up"
+              type="submit"
+              disabled={!enableSubmit()}
+              isLoading={isLoading}
             />
           </div>
+                </div>
         </div>
-
-        <div className="position form__position">
-          <h2 className="form__position-title">
-            Select your position
-          </h2>
-
-          <ul className="positions">
-            {positions && (
-              positions.map(position => {
-                const { id, name } = position;
-
-                return (
-                  <li className="form__radio" key={id}>
-                    <RadioInput
-                      value={name}
-                      checked={selectedOption}
-                      onSelect={handleOptionChange}
-                    />
-                  </li>
-                )
-              })
-            )}
-          </ul>
-        </div>
-
-        <FileInput
-          selectedFile={selectedFile}
-          onUpload={handleFileUpload}
-          onBlur={validateInputFile}
-          isError={errorFile}
-          errorText={errorTextFile}
-        />
-
-        <div className="form__submit">
-          <Button
-            text="Sign Up"
-            type="submit"
-            disabled={!enableSubmit()}
-            isLoading={isLoading}
-          />
-        </div>
-      </div>
     </form>
   )
 }

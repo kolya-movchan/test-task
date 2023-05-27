@@ -86,6 +86,7 @@ export const Testimonials = () => {
         <Button
           text="Show more"
           onClick={handleClick}
+          type="button"
         />
       )}
     </div>
