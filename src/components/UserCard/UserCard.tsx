@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { User } from "types/User";
 
 type Props = {
@@ -13,6 +13,8 @@ export const UserCard: React.FC<Props> = ({ user }) => {
     photo,
     position,
   } = user;
+
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
     const defaultSrc = './user.png';
@@ -41,12 +43,26 @@ export const UserCard: React.FC<Props> = ({ user }) => {
           {position}
         </div>
 
-        <div className="user-card__email">
-          {email}
+        <div
+          className="user-card__email"
+          onMouseOver={() => setShowTooltip(true)}
+          onMouseOut={() => setShowTooltip(false)}
+          onFocus={() => setShowTooltip(true)}
+          onBlur={() => setShowTooltip(false)}
+        >
+          <a href={`mailto:${email}`}>
+            {email}
+          </a>
+
+          {showTooltip && (
+            <div className="tooltip">{email}</div>
+          )}
         </div>
 
         <div className="user-card__phone-number">
-          {phone}
+          <a href={`tel:${phone}`}>
+            {phone}
+          </a>
         </div>
       </div>
     </div>

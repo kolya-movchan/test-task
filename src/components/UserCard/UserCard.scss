@@ -17,4 +17,21 @@
   &__photo-img {
     border-radius: 50%;
   }
+
+  &__email {
+    position: relative;
+  }
+
+  .tooltip {
+    position: absolute;
+    left: 25px;
+    padding: 3px 16px;
+  
+    font-size: $text-lh-size-2;
+    line-height: $text-lh-size-1;
+    border-radius: 4px;
+    background-color: $color-dark;
+    color: $color-light;
+    word-break: keep-all;
+  }
 }

@@ -9,13 +9,10 @@ import { useEffect, useState } from "react";
 import { UsersResponse } from "types/UsersResponse";
 import { User } from "types/User";
 import { RootState } from 'utils/store';
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 export const Testimonials = () => {
   const newUserId = useSelector<RootState, number>((state) => state.newUserId)
-
-  console.log('newUserId', newUserId);
-  
 
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(0);
@@ -39,10 +36,6 @@ export const Testimonials = () => {
       const sortedUsers = usersFromServer.sort((user1, user2) => (
         user2.registration_timestamp - user1.registration_timestamp)
       );
-      
-      console.log(nextPage, 'nextPAGE');
-      console.log(newUserId, 'newUserId');
-      console.log(newUserId > 0, nextPage === 1);
 
       if (nextPage === 1 && newUserId > 0) {
         setUsers(sortedUsers);
