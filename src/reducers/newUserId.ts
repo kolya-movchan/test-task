@@ -10,18 +10,14 @@ export const add = (id: number): Add => ({
     payload: id,
   });
 
-// export const remove = (): Remove => ({
-//   type: Reducer.REMOVEDUSERID,
-// });
-
 export const actions = { add };
 
 const newUserIdReducer = (userStored = 0, action: Action): number => {
   if (action.type === Reducer.NEWUSERID) {
     return action.payload;
   }
-  
-  return userStored
+
+  return userStored;
 };
 
 export default newUserIdReducer;

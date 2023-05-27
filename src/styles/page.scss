@@ -25,6 +25,10 @@ body {
   background-color: $secondary-color;
 }
 
+.loading {
+  margin-bottom: 20px;
+}
+
 .success {
   margin-bottom: 100px;
   @extend %flex-center;

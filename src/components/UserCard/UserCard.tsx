@@ -55,7 +55,9 @@ export const UserCard: React.FC<Props> = ({ user }) => {
           </a>
 
           {showTooltip && (
-            <div className="tooltip">{email}</div>
+            <a href={`mailto:${email}`} className="tooltip">
+              {email}
+            </a>
           )}
         </div>
 

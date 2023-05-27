@@ -64,25 +64,30 @@ export const Testimonials = () => {
 
   return (
     <div className="testimonials" id='users'>
-      <h1 className="title testimonials__title">
-        Working with GET request
-      </h1>
+        <h1 className="title testimonials__title">
+          Working with GET request
+        </h1>
 
-      <div className="testimonials__users">
-        {users.map(user => <UserCard key={user.id} user={user} />)}
+        <div className="testimonials__users">
+          {users.map(user => <UserCard key={user.id} user={user} />)}
+        </div>
 
-        {isLoading && (
-        <ReactLoading type="spin" color='#00bdd3' height={40} width={40} />
-        )}
+      {isLoading && (
+        <ReactLoading
+          type="spin"
+          color='#00bdd3'
+          height={40}
+          width={40}
+          className='loading'
+        />
+      )}
 
-
-        {!reachedLimit && (
-          <Button
+      {!reachedLimit && (
+        <Button
           text="Show more"
           onClick={handleClick}
-          />
-        )}
-      </div>
+        />
+      )}
     </div>
   )
 }

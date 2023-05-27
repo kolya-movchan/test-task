@@ -6,6 +6,18 @@
 
   background-color: $color-light;
 
+  @media (min-width: $break-point1) {
+    & {
+      padding: 13px 32px;
+    }
+  }
+
+  @media (min-width: $break-point2) {
+    & {
+      padding: 13px 60px;
+    }
+  }
+
   .logo-container {
     max-width: 104px;
     @extend %flex-center;

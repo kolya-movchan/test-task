@@ -1,5 +1,5 @@
 @import 'tailwindcss/tailwind.css';
-.form__submit, .user-card, .testimonials__users, .button, .banner, .header .logo-container, .success {
+.form__submit, .user-card, .testimonials, .button, .banner, .header .logo-container, .success {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +31,10 @@ body {
   background-color: #00bdd3;
 }
 
+.loading {
+  margin-bottom: 20px;
+}
+
 .success {
   margin-bottom: 100px;
   flex-direction: column;
@@ -46,6 +50,16 @@ body {
   justify-content: space-between;
   padding: 13px 16px;
   background-color: #fff;
+}
+@media (min-width: 768px) {
+  .header {
+    padding: 13px 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .header {
+    padding: 13px 60px;
+  }
 }
 .header .logo-container {
   max-width: 104px;
@@ -74,14 +88,28 @@ body {
 
 .banner {
   margin-bottom: 140px;
-  flex-direction: column;
   padding: 0 16px;
   height: calc(100vh - 60px);
   color: #fff;
-  background-image: url(../../../public/ukraine-360.jpg);
+  background-image: url(../../../public/banner/ukraine-360.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+@media (min-width: 768px) {
+  .banner {
+    background-image: url(../../../public/banner/ukraine-768.jpg);
+  }
+}
+@media (min-width: 768px) {
+  .banner__container {
+    max-width: 380px;
+  }
+}
+@media (min-width: 1024px) {
+  .banner {
+    background-image: url(../../../public/banner/ukraine-1024.jpg);
+  }
 }
 .banner__title {
   margin-bottom: 21px;
@@ -116,33 +144,53 @@ body {
 
 .testimonials {
   margin-bottom: 140px;
+  flex-direction: column;
   padding: 0;
 }
 .testimonials__title {
   word-break: normal;
 }
 .testimonials__users {
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
   padding: 0 16px;
-  flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   word-break: break-all;
 }
 
 .user-card {
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
   padding: 20px;
-  width: 100%;
+  flex-basis: 100%;
   font-size: 16px;
   line-height: 26px;
   background-color: #fff;
   border-radius: 10px;
 }
-.user-card:last-of-type {
-  margin-bottom: 30px;
+@media (min-width: 768px) {
+  .user-card {
+    flex-basis: calc(50% - 16px);
+  }
 }
 .user-card__photo-img {
   border-radius: 50%;
+}
+.user-card__email {
+  position: relative;
+}
+.user-card .tooltip {
+  position: absolute;
+  left: 25px;
+  padding: 3px 16px;
+  font-size: 16px;
+  line-height: 26px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8705882353);
+  color: #fff;
+  word-break: keep-all;
 }
 
 .input.input-error,

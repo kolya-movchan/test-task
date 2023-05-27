@@ -1,5 +1,7 @@
 .testimonials {
   margin-bottom: 140px;
+  @extend %flex-center;
+  flex-direction: column;
   padding: 0;
 
   &__title {
@@ -7,11 +9,19 @@
   }
 
   &__users {
+    margin-bottom: 30px;
+    display: flex;
+    
+    flex-wrap: wrap;
     padding: 0 16px;
-    @extend %flex-center;
-    flex-direction: column;
-    gap: 20px;
-
     word-break: break-all;
+
+    @media (min-width: $break-point1) {
+      gap: 16px;
+    }
+
+    @media (min-width: $break-point2) {
+      gap: 29px;
+    }
   }
 }
