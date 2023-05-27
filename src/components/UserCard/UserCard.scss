@@ -1,20 +1,46 @@
 .user-card {
   @extend %flex-center;
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
   padding: 20px;
-  width: 100%;
+  // width: 100%;
+  flex-basis: 100%;
 
   font-size: $text-size;
   line-height: $text-lh-size-1;
   background-color: $color-light;
   border-radius: 10px;
 
-  &:last-of-type {
-    margin-bottom: 30px;
+  @media (min-width: $break-point1) {
+    flex-basis: calc(50% - 16px);
   }
+
+  @media (min-width: $break-point2) {
+    flex-basis: calc(33% - 29px);
+  }
+
+  // &:last-of-type {
+  // }
 
   &__photo-img {
     border-radius: 50%;
+  }
+
+  &__email {
+    position: relative;
+  }
+
+  .tooltip {
+    position: absolute;
+    left: 25px;
+    padding: 3px 16px;
+  
+    font-size: $text-lh-size-2;
+    line-height: $text-lh-size-1;
+    border-radius: 4px;
+    background-color: $color-dark;
+    color: $color-light;
+    word-break: keep-all;
   }
 }

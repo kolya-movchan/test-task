@@ -1,7 +1,10 @@
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
-  min-width: 360px;
-
   font-family: $main-font-family;
   font-weight: $main-font-style;
   color: $color-dark;
@@ -19,4 +22,26 @@ body {
 
 .loader {
   background-color: $secondary-color;
+}
+
+.loading {
+  margin-bottom: 20px;
+}
+
+.success {
+  margin-bottom: 100px;
+  @extend %flex-center;
+  flex-direction: column;
+  padding: 0 16px;
+
+  &__title {
+    margin-bottom: 50px;
+  }
+}
+
+.main {
+  @media (min-width: $break-point3) {
+    max-width: 1170px;
+    margin: 0 auto;
+  }
 }

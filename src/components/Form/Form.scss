@@ -2,6 +2,15 @@
   margin-bottom: 100px;
   padding: 0 16px;
 
+  &__container {
+    margin: 0 auto;
+    max-width: 328px;
+
+    @media (min-width: $break-point1) {
+      max-width: 380px;
+    }
+  }
+
   &__contact-details {
     margin-bottom: 29px;
   }

@@ -1,28 +1,35 @@
+import classNames from 'classnames';
 import React from 'react';
 
 type Props = {
   text: string,
-  color: string,
   onClick?: () => void,
   disabled?: boolean,
   type?: string,
+  isLoading?: boolean,
 } 
 
 export const Button: React.FC<Props> = ({
   text,
-  color,
   onClick,
   disabled = false,
-  type = 'button'
+  type = 'button',
+  isLoading
 }) => {
   return (
   <button
-    className={`button button--${color}`}
+    className={classNames(
+      `button`,
+      {
+        'text-white': isLoading,
+        'button--showMore': type === 'button'
+      }
+    )}
     onClick={onClick}
     type={type === 'submit' ? "submit" : "button"}
     disabled={disabled}
   >
-    {text}
+    {!isLoading ? text : <i className="fa fa-sync fa-spin "></i>}
   </button>
   )
 }

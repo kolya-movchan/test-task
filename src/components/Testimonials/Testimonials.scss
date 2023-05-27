@@ -1,17 +1,26 @@
 .testimonials {
   margin-bottom: 140px;
-  padding: 0;
+  @extend %flex-center;
+  flex-direction: column;
+  padding: 0 16px;
 
   &__title {
     word-break: normal;
   }
 
   &__users {
-    padding: 0 16px;
-    @extend %flex-center;
-    flex-direction: column;
-    gap: 20px;
-
+    margin-bottom: 50px;
+    display: flex;
+    
+    flex-wrap: wrap;
     word-break: break-all;
+
+    @media (min-width: $break-point1) {
+      gap: 16px;
+    }
+
+    @media (min-width: $break-point2) {
+      gap: 29px;
+    }
   }
 }

@@ -1,14 +1,17 @@
 .button {
   width: 100px;
   height: 34px;
+  @extend %flex-center;
 
   font-size: $text-size;
   line-height: $text-lh-size-1;
   background-color: $primary-color;
   border-radius: 80px;
   transition: background-color 0.3s;
-  &--yellow {
-    color: $color-dark;
+  color: $color-dark;
+
+  &--showMore {
+    width: 120px;
   }
 
   &:hover {
