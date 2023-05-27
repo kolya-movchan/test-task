@@ -1,14 +1,14 @@
+import errorReducer from 'reducers/error';
 import newUserIdReducer from 'reducers/newUserId';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-
 const rootReducer = combineReducers({
   newUserId: newUserIdReducer,
+  newError: errorReducer,
 });
-
 
 export const store = createStore(
   rootReducer,

@@ -14,12 +14,20 @@ import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
 import { useDispatch, useSelector } from "react-redux"
 import { actions } from "reducers/newUserId"
+import { actions as errorActions, State } from "reducers/error"
 import { RootState } from "utils/store"
 
 export const Form = () => {
   const dispatch = useDispatch();
 
-  const newUserId = useSelector<RootState, number>((state) => state.newUserId)
+  const newUserId = useSelector<RootState, number>((state) => state.newUserId);
+  const {
+    errorName,
+    errorTextName,
+  } = useSelector<RootState, State>((state) => state.newError);
+
+  const test = useSelector<RootState, State>((state) => state.newError);
+  
 
   const [positions, setPositions] = useState<Position[]>();
   const [name, setName] = useState('');
@@ -31,8 +39,8 @@ export const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const initial: ErrorObject = {
-    errorName: false,
-    errorTextName: '',
+    // errorName: false,
+    // errorTextName: '',
     errorEmail: false,
     errorTextEmail: '',
     errorPhone: false,
@@ -111,40 +119,21 @@ export const Form = () => {
 
   const validateInputName = () => {
     if (!name.length) {
-      setError({
-        ...error,
-        errorName: true,
-        errorTextName: Error.NONAME,
-      });
-
+      dispatch(errorActions.notifyShortName(Error.NONAME));
       return
     }
 
     if (name.length < 2) {
-      setError({
-        ...error,
-        errorName: true,
-        errorTextName: Error.SHORTNAME,
-      });
-
+      dispatch(errorActions.notifyShortName(Error.SHORTNAME));
       return
     }
 
-    if (name.length === 60) {
-      setError({
-        ...error,
-        errorName: true,
-        errorTextName: Error.LONGNAME,
-      });
-
+    if (name.length === 61) {
+      dispatch(errorActions.notifyShortName(Error.LONGNAME));
       return
     }
 
-    setError({
-      ...error,
-      errorName: false,
-      errorTextName: '',
-    });
+    dispatch(errorActions.resetName());
   }
 
   const validateInputEmail = () => {
@@ -301,10 +290,10 @@ export const Form = () => {
   }
 
   const {
-    errorName,
+    // errorName,
     errorEmail,
     errorPhone,
-    errorTextName,
+    // errorTextName,
     errorTextEmail,
     errorTextPhone,
     errorFile,
@@ -353,7 +342,7 @@ export const Form = () => {
             <Input
               placeholder="Your name"
               value={name}
-              maxLength={60}
+              maxLength={61}
               onQuery={handleNameInput}
               onBlur={validateInputName}
               isError={errorName}
