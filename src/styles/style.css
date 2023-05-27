@@ -241,6 +241,9 @@ body {
 .helper--error {
   color: #CB3D40;
 }
+.helper--file {
+  margin-bottom: 54px;
+}
 
 .radio {
   appearance: none;
