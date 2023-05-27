@@ -3,7 +3,6 @@ import { StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './utils/store';
 
-import 'tailwindcss/tailwind.css';
 import './styles/main.scss';
 
 import App from './App';

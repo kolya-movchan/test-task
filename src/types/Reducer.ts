@@ -1,4 +1,4 @@
 export enum Reducer {
   NEWUSERID = 'user/ADD',
-  REMOVEDUSERID = 'user/REMOVE',
+  // REMOVEDUSERID = 'user/REMOVE',
 }

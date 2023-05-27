@@ -12,11 +12,14 @@ import { Error, ErrorObject } from '../../types/Error';
 import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { actions } from "reducers/newUserId"
+import { RootState } from "utils/store"
 
 export const Form = () => {
   const dispatch = useDispatch();
+
+  const newUserId = useSelector<RootState, number>((state) => state.newUserId)
 
   const [positions, setPositions] = useState<Position[]>();
   const [name, setName] = useState('');
@@ -25,6 +28,7 @@ export const Form = () => {
   const [selectedOption, setSelectedOption] = useState(PositionType.LAWYER);
   const [selectedOptionId, setSelectedOptionId] = useState<number>(1);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const initial: ErrorObject = {
     errorName: false,
@@ -284,13 +288,16 @@ export const Form = () => {
     formData.append('photo', selectedFile as File);
 
     try {
+      setIsLoading(true)
       const response = await item.post<UserPostResponse>('/users', formData);
 
       dispatch(actions.add(response.user_id))
       
     } catch (error) {
       console.log(error);
-    } 
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const {
@@ -313,8 +320,28 @@ export const Form = () => {
     validateInputFile()
   }, [selectedFile])
 
+  if (newUserId) {
+    return (
+      <div className="success">
+        <h1 className="title success__title">
+          User successfully registered
+        </h1>
+
+        <img
+          src="./success.svg"
+          alt="success"
+          className="success__photo"
+        />
+      </div>
+    )
+  }
+
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form
+      className="form"
+      id="registering"
+      onSubmit={handleSubmit}
+    >
       <div className="form__content">
         <h1 className="title form__title">
           Working with POST request
@@ -392,9 +419,9 @@ export const Form = () => {
         <div className="form__submit">
           <Button
             text="Sign Up"
-            color="grey"
             type="submit"
             disabled={!enableSubmit()}
+            isLoading={isLoading}
           />
         </div>
       </div>

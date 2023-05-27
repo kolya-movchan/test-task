@@ -9,12 +9,9 @@ import { useEffect, useState } from "react";
 import { UsersResponse } from "types/UsersResponse";
 import { User } from "types/User";
 import { RootState } from 'utils/store';
-import { actions } from 'reducers/newUserId';
 import { useDispatch, useSelector } from "react-redux"
 
 export const Testimonials = () => {
-  const dispatch = useDispatch();
-
   const newUserId = useSelector<RootState, number>((state) => state.newUserId)
 
   console.log('newUserId', newUserId);
@@ -46,15 +43,9 @@ export const Testimonials = () => {
       console.log(nextPage, 'nextPAGE');
       console.log(newUserId, 'newUserId');
       console.log(newUserId > 0, nextPage === 1);
-      // console.log('DISPATCH');
-      // console.log(dispatch(actions.remove()));
-      // console.log('DISPATCH');
-      
-      
+
       if (nextPage === 1 && newUserId > 0) {
         setUsers(sortedUsers);
-        dispatch(actions.remove())
-        console.log('dispatch');
       } else {
         setUsers([...users, ...sortedUsers]);
       }
@@ -79,7 +70,7 @@ export const Testimonials = () => {
   }, [newUserId]);
 
   return (
-    <div className="testimonials">
+    <div className="testimonials" id='users'>
       <h1 className="title testimonials__title">
         Working with GET request
       </h1>
@@ -95,7 +86,6 @@ export const Testimonials = () => {
         {!reachedLimit && (
           <Button
           text="Show more"
-          color="yellow"
           onClick={handleClick}
           />
         )}

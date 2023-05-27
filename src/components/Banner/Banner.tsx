@@ -1,4 +1,4 @@
-import { Button } from "components/Button"
+import { scrollToSection } from "utils/navigation"
 
 export const Banner = () => {
   return (
@@ -11,7 +11,12 @@ export const Banner = () => {
         What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS with a vast understanding of User design thinking as they&apos;ll be building web interfaces with accessibility in mind. They should also be excited to learn, as the world of Front-End Development keeps evolving.
       </p>
 
-      <Button text="Sign Up" color="yellow" onClick={() => console.log(1)} />
+      <button
+          className="button" 
+          onClick={() => scrollToSection('registering')}
+        >
+          Sign Up
+        </button>
     </div>
   )
 }
