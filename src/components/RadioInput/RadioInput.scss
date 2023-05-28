@@ -1,0 +1,42 @@
+.radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  outline: none;
+  border-radius: 50%;
+  border: 1px solid $unchecked-color;
+  background-color: $color-light;
+
+  &:checked {
+    border: 1px solid $secondary-color;
+
+    &::after {
+      visibility: visible;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $secondary-color;
+    visibility: hidden;
+  }
+}
+
+.radio-title {
+  line-height: $text-lh-size-1;
+}

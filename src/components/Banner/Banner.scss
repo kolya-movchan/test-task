@@ -1,0 +1,42 @@
+.banner {
+  margin-bottom: 140px;
+  padding: 0 16px;
+  height: calc(100vh - 60px);
+  @extend %flex-center;
+
+  color: $color-light;
+  background-image: url(../../../public/banner/ukraine-360.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background-size: contain;
+  background-position: center;
+
+  @media (min-width: $break-point1) {
+    background-image: url(../../../public/banner/ukraine-768.jpg);
+  }
+
+  &__container {
+    @extend %flex-center;
+    flex-direction: column;
+    max-width: 328px;
+
+    @media (min-width: $break-point1) {
+      max-width: 380px;
+    }
+  }
+
+  @media (min-width: $break-point2) {
+    background-image: url(../../../public/banner/ukraine-1024.jpg);
+  }
+
+  &__title {
+    margin-bottom: 21px;
+  }
+
+  &__text {
+    margin-bottom: 32px;
+
+    font-size: $text-size;
+    line-height: $text-lh-size-1;
+  }
+}

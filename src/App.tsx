@@ -1,15 +1,20 @@
-import { Header } from 'components/Header';
-import { Button } from 'components/Button';
-import { ReactComponent as Logo } from 'assets/favicon.svg';
+import { Banner } from 'components/Banner';
+import { Form } from 'components/Form';
+import { Testimonials } from 'components/Testimonials/Testimonials';
+import { Header } from './components/Header'
 
 function App() {
   return (
     <div className="App">
-      <Header title="hola" />
-      <Logo height={100} width={100} />
-      <Button onClick={() => alert('hola')}>Heyo</Button>
+      <Header/>
+
+      <main className='main'>
+        <Banner />
+        <Testimonials />
+        <Form />
+      </main>
     </div>
-  );
+  )
 }
 
 export default App;

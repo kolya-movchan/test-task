@@ -1,5 +1,6 @@
 {
-  "name": "vite-react-ts",
+  "name": "test-task",
+  "homepage": "https://kolya-movchan.github.io/test-task",
   "version": "0.0.0",
   "description": "React Typescript Starter Template with Vite",
   "repository": {
@@ -14,21 +15,30 @@
   ],
   "author": "Malolan B. <uchihamalolan@gmail.com> (https://twitter.com/malolan12)",
   "license": "MIT",
-  "homepage": "https://github.com/uchihamalolan/vite-react-ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --outDir build",
     "test": "jest",
     "serve": "vite preview",
     "prepare": "husky install",
     "commit": "commit",
     "format": "prettier --write --ignore-unknown .",
-    "lint": "eslint --cache ./src"
+    "lint": "eslint --cache ./src",
+    "deploy": "gh-pages -d build",
+    "sass:watch": "sass --watch src/styles/main.scss:src/styles/style.css"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
+    "react-loading": "^2.0.3",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
     "vite-plugin-svgr": "2.4.0"
   },
   "devDependencies": {
@@ -57,6 +67,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.9.1",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "jest": "29.3.1",
     "jest-environment-jsdom": "^29.3.1",
@@ -64,6 +75,7 @@
     "postcss": "^8.4.21",
     "prettier": "2.8.2",
     "react-test-renderer": "^18.2.0",
+    "sass": "^1.62.1",
     "tailwindcss": "^3.2.4",
     "ts-jest": "29.0.3",
     "typescript": "^4.9.4",
