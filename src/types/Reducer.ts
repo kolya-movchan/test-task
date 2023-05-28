@@ -1,6 +1,7 @@
 export enum Reducer {
   NEWUSERID = 'user/ADD',
-  NAMEISSHORT = 'user/NAME',
-  NAMERESET = 'user/NAMERESET',
-  // NAMEISSHORT = 'user/NAME',
+  NAMEISWRONG = 'user/NAME',
+  EMAILISWRONG = 'user/WRONGEMAIL',
+  PHONEISWRONG = 'user/PHONEISWRONG',
+  FILEISWRONG = 'user/FILE',
 }

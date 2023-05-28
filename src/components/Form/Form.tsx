@@ -13,22 +13,26 @@ import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
 import { useDispatch, useSelector } from "react-redux"
-import { actions } from "reducers/newUserId"
 import { actions as errorActions, State } from "reducers/error"
+import { actions as userActions } from "reducers/newUserId"
 import { RootState } from "utils/store"
 
 export const Form = () => {
   const dispatch = useDispatch();
 
   const newUserId = useSelector<RootState, number>((state) => state.newUserId);
+  
   const {
     errorName,
     errorTextName,
+    errorEmail,
+    errorTextEmail,
+    errorPhone,
+    errorTextPhone,
+    errorFile,
+    errorTextFile,
   } = useSelector<RootState, State>((state) => state.newError);
-
-  const test = useSelector<RootState, State>((state) => state.newError);
   
-
   const [positions, setPositions] = useState<Position[]>();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,12 +45,12 @@ export const Form = () => {
   const initial: ErrorObject = {
     // errorName: false,
     // errorTextName: '',
-    errorEmail: false,
-    errorTextEmail: '',
-    errorPhone: false,
-    errorTextPhone: '',
-    errorFile: false,
-    errorTextFile: ''
+    // errorEmail: false,
+    // errorTextEmail: '',
+    // errorPhone: false,
+    // errorTextPhone: '',
+    // errorFile: false,
+    // errorTextFile: ''
   }
 
   const [error, setError] = useState(initial);
@@ -119,81 +123,53 @@ export const Form = () => {
 
   const validateInputName = () => {
     if (!name.length) {
-      dispatch(errorActions.notifyShortName(Error.NONAME));
+      dispatch(errorActions.notifyWrongName(true, Error.NONAME));
       return
     }
 
     if (name.length < 2) {
-      dispatch(errorActions.notifyShortName(Error.SHORTNAME));
+      dispatch(errorActions.notifyWrongName(true, Error.SHORTNAME));
       return
     }
 
     if (name.length === 61) {
-      dispatch(errorActions.notifyShortName(Error.LONGNAME));
+      dispatch(errorActions.notifyWrongName(true, Error.LONGNAME));
       return
     }
 
-    dispatch(errorActions.resetName());
+    dispatch(errorActions.notifyWrongName(false));
   }
 
   const validateInputEmail = () => {
     const isValidEmail = emailValidation.test(email);
 
     if (!email) {
-      setError({
-        ...error,
-        errorEmail: true,
-        errorTextEmail: Error.NOEMAIL,
-      });
-
+      dispatch(errorActions.notifyWrongEmail(true, Error.NOEMAIL));
       return
     }
 
     if (!isValidEmail) {
-      setError({
-        ...error,
-        errorEmail: true,
-        errorTextEmail: Error.WRONGEMAIL,
-      });
-
+      dispatch(errorActions.notifyWrongEmail(true, Error.WRONGEMAIL))
       return
     }
 
-    setError({
-      ...error,
-      errorEmail: false,
-      errorTextEmail: '',
-    });
+    dispatch(errorActions.notifyWrongEmail(false))
   }
 
   const validateInputPhone = () => {
     const isValidPhone = phoneValidation.test(phone);
 
     if (!phone) {
-      setError({
-        ...error,
-        errorPhone: true,
-        errorTextPhone: Error.NOPHONE,
-      });
-
+      dispatch(errorActions.notifyWrongPhone(true, Error.NOPHONE));
       return
     }
 
     if (!isValidPhone) {
-      setError({
-        ...error,
-        errorPhone: true,
-        errorTextPhone: Error.WRONGPHONEFORMAT,
-      });
-
+      dispatch(errorActions.notifyWrongPhone(true, Error.WRONGPHONEFORMAT));
       return
     }
 
-    setError({
-      ...error,
-      errorPhone: false,
-      errorTextPhone: '',
-    });
+    dispatch(errorActions.notifyWrongPhone(false));
   }
 
   const validateInputFile = () => {
@@ -204,26 +180,16 @@ export const Form = () => {
     const allowedFormats = ['image/jpeg', 'image/jpg'];
 
     if (!allowedFormats.includes(selectedFile.type)) {
-      setError({
-        ...error,
-        errorFile: true,
-        errorTextFile: Error.FILEFORMAT,
-      });
-
+      dispatch(errorActions.notifyWrongFile(true, Error.FILEFORMAT));
       return;
     }
 
     const maxSize = 5e+6; // 5MB
 
-      if (selectedFile.size > maxSize) {
-        setError({
-          ...error,
-          errorFile: true,
-          errorTextFile: Error.FILESIZE,
-        });
-
-        return;
-      }
+    if (selectedFile.size > maxSize) {
+      dispatch(errorActions.notifyWrongFile(true, Error.FILESIZE));
+      return;
+    }
 
     // Create an image object to get the dimensions
     const img = new Image();
@@ -232,21 +198,12 @@ export const Form = () => {
     img.onload = () => {
       // Check minimum dimensions
       if (img.width < 70 || img.height < 70) {
-        setError({
-          ...error,
-          errorFile: true,
-          errorTextFile: Error.FILERESOLUTION,
-        });
-
+        dispatch(errorActions.notifyWrongFile(true, Error.FILERESOLUTION));
         return;
       }
     }
 
-    setError({
-      ...error,
-      errorFile: false,
-      errorTextFile: '',
-    });
+    dispatch(errorActions.notifyWrongFile(false));
   }
 
   const enableSubmit = () => {
@@ -280,7 +237,7 @@ export const Form = () => {
       setIsLoading(true)
       const response = await item.post<UserPostResponse>('/users', formData);
 
-      dispatch(actions.add(response.user_id))
+      dispatch(userActions.add(response.user_id))
       
     } catch (error) {
       console.log(error);
@@ -288,17 +245,6 @@ export const Form = () => {
       setIsLoading(false)
     }
   }
-
-  const {
-    // errorName,
-    errorEmail,
-    errorPhone,
-    // errorTextName,
-    errorTextEmail,
-    errorTextPhone,
-    errorFile,
-    errorTextFile,
-  } = error;
 
   useEffect(() => {
     loadPositions();
@@ -349,6 +295,7 @@ export const Form = () => {
               errorText={errorTextName}
               helperText={Helper.NAME}
               />
+
             <Input
               placeholder="Email"
               value={email}
@@ -360,6 +307,7 @@ export const Form = () => {
               errorText={errorTextEmail}
               helperText={Helper.EMAIL}
             />
+
             <div className="form__input-phone">
               <Input
                 placeholder="Phone"
@@ -372,10 +320,12 @@ export const Form = () => {
               />
             </div>
           </div>
+
           <div className="position form__position">
             <h2 className="form__position-title">
               Select your position
             </h2>
+
             <ul className="positions">
               {positions && (
                 positions.map(position => {
@@ -393,6 +343,7 @@ export const Form = () => {
               )}
             </ul>
           </div>
+
           <FileInput
             selectedFile={selectedFile}
             onUpload={handleFileUpload}
@@ -400,6 +351,7 @@ export const Form = () => {
             isError={errorFile}
             errorText={errorTextFile}
           />
+
           <div className="form__submit">
             <Button
               text="Sign Up"
@@ -408,8 +360,8 @@ export const Form = () => {
               isLoading={isLoading}
             />
           </div>
-                </div>
         </div>
+      </div>
     </form>
   )
 }
