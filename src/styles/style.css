@@ -107,14 +107,14 @@ body {
   padding: 0 16px;
   height: calc(100vh - 60px);
   color: #fff;
-  background-image: url(./banner/ukraine-360.jpg);
+  background-image: url(../../assets/banner/ukraine-360.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 @media (min-width: 768px) {
   .banner {
-    background-image: url(./public/banner/ukraine-768.jpg);
+    background-image: url(../../assets/banner/ukraine-768.jpg);
   }
 }
 .banner__container {
@@ -128,7 +128,7 @@ body {
 }
 @media (min-width: 1024px) {
   .banner {
-    background-image: url(./public/banner/ukraine-1024.jpg);
+    background-image: url(./assets/banner/ukraine-1024.jpg);
   }
 }
 .banner__title {
