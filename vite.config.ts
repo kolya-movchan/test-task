@@ -15,7 +15,7 @@ export default defineConfig({
     }
   },
   */
-  base: "/",
+  base: "/test-task",
   build: {
     sourcemap: true,
   },
