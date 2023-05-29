@@ -5,13 +5,13 @@
   @extend %flex-center;
 
   color: $color-light;
-  background-image: url(./banner/ukraine-360.jpg);
+  background-image: url(./build/banner/ukraine-360.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 
   @media (min-width: $break-point1) {
-    background-image: url(./public/banner/ukraine-768.jpg);
+    background-image: url(./build/banner/ukraine-768.jpg);
   }
 
   &__container {
@@ -25,7 +25,7 @@
   }
 
   @media (min-width: $break-point2) {
-    background-image: url(./public/banner/ukraine-1024.jpg);
+    background-image: url(./build/banner/ukraine-1024.jpg);
   }
 
   &__title {
