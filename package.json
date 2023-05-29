@@ -1,8 +1,8 @@
 {
   "name": "test-task",
-  "homepage": "https://kolya-movchan.github.io/test-task",
-  "version": "0.0.0",
-  "description": "React Typescript Starter Template with Vite",
+  "homepage": "https://kolya-movchan.github.io/test-task/",
+  "version": "0.1.0",
+  "description": "Test Project",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uchihamalolan/vite-react-ts.git"
@@ -24,6 +24,7 @@
     "commit": "commit",
     "format": "prettier --write --ignore-unknown .",
     "lint": "eslint --cache ./src",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "sass:watch": "sass --watch src/styles/main.scss:src/styles/style.css"
   },
