@@ -8,9 +8,22 @@
     word-break: normal;
   }
 
+  @media (min-width: $break-point1) {
+    padding: 0 32px;
+  }
+
+  @media (min-width: $break-point2) {
+    padding: 0 60px;
+  }
+
+  @media (min-width: $break-point3) {
+    padding: 0;
+  }
+
   &__users {
     margin-bottom: 50px;
     display: flex;
+    gap: 20px;
     
     flex-wrap: wrap;
     word-break: break-all;
@@ -21,6 +34,11 @@
 
     @media (min-width: $break-point2) {
       gap: 29px;
+      max-width: 904px;
+    }
+
+    @media (min-width: $break-point3) {
+      max-width: none;
     }
   }
 }

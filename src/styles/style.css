@@ -170,9 +170,25 @@ body {
 .testimonials__title {
   word-break: normal;
 }
+@media (min-width: 768px) {
+  .testimonials {
+    padding: 0 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .testimonials {
+    padding: 0 60px;
+  }
+}
+@media (min-width: 2560px) {
+  .testimonials {
+    padding: 0;
+  }
+}
 .testimonials__users {
   margin-bottom: 50px;
   display: flex;
+  gap: 20px;
   flex-wrap: wrap;
   word-break: break-all;
 }
@@ -184,6 +200,12 @@ body {
 @media (min-width: 1024px) {
   .testimonials__users {
     gap: 29px;
+    max-width: 904px;
+  }
+}
+@media (min-width: 2560px) {
+  .testimonials__users {
+    max-width: none;
   }
 }
 
@@ -192,7 +214,9 @@ body {
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
+  width: 100%;
   flex-basis: 100%;
+  flex-grow: 1;
   font-size: 16px;
   line-height: 26px;
   background-color: #fff;
@@ -200,12 +224,17 @@ body {
 }
 @media (min-width: 768px) {
   .user-card {
-    flex-basis: calc(50% - 16px);
+    flex-basis: calc(50% - 8px);
   }
 }
 @media (min-width: 1024px) {
   .user-card {
-    flex-basis: calc(33% - 29px);
+    max-width: 282px;
+  }
+}
+@media (min-width: 2560px) {
+  .user-card {
+    max-width: 370px;
   }
 }
 .user-card__photo-img {
