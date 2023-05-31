@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { scrollToSection } from "utils/navigation"
 
 export const Header = () => {
@@ -5,7 +6,7 @@ export const Header = () => {
     <header className="header">
       <div className="header__container">
         <div className="logo-container">
-          <a href="/" className="logo-wrapper">
+          <a href="#" className="logo-wrapper">
             <div className="logo">
               <img
                 src="./icons/logo.svg"
