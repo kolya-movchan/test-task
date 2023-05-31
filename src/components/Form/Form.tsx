@@ -45,7 +45,6 @@ export const Form = () => {
   const [selectedOptionId, setSelectedOptionId] = useState<number>(1);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState<ErrorObject>({});
 
   const loadPositions = async () => {
     try {
