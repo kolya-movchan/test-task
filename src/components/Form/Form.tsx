@@ -20,6 +20,7 @@ import { Error } from '../../types/Error';
 import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
+import { scrollToSection } from "utils/navigation"
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -256,7 +257,10 @@ export const Form = () => {
       setIsLoading(true)
       const response = await item.post<UserPostResponse>('/users', formData);
 
-      dispatch(userActions.add(response.user_id))
+      dispatch(userActions.add(response.user_id));
+      setTimeout(() => {
+        scrollToSection('users');
+      }, 300);
       
     } catch (error) {
       // error logic
