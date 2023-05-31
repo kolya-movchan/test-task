@@ -1,9 +1,9 @@
+import React from 'react'
 import classNames from 'classnames';
-import React, { ChangeEvent } from 'react'
 
 type Props = {
   selectedFile: File | null,
-  onUpload: (event: ChangeEvent<HTMLInputElement>) => void,
+  onUpload: (event: React.ChangeEvent<HTMLInputElement>) => void,
   onBlur: () => void,
   isError: boolean | string,
   errorText: string | boolean,
@@ -19,12 +19,17 @@ export const File: React.FC<Props> = ({
   return (
     <>
      <div className="form__photo-container">
-      <label htmlFor="photoUpload" className={classNames(
+      <label
+        htmlFor="photoUpload"
+        className={classNames(
           'form__file',
           { 'input-error': isError }
-        )}>
+        )}
+      >
         Upload
       </label>
+
+      {/* hiding default input adding styled one with controling of visual effects with a help of classes */}
 
       <input
         id="photoUpload"
@@ -34,6 +39,7 @@ export const File: React.FC<Props> = ({
         style={{ display: 'none' }}
         onBlur={() => onBlur()}
       />
+      
 
       <input
         className={
@@ -49,6 +55,8 @@ export const File: React.FC<Props> = ({
         readOnly
       />
     </div>
+
+      {/* reserving space for error and showing error thext if error occurs */}
 
       <p className="helper helper--error helper--file">
         {isError ? errorText : ''}

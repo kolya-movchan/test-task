@@ -1,15 +1,15 @@
-// import React from "react";
+import { useEffect, useState } from "react";
+
+import { useSelector } from "react-redux"
+import { RootState } from 'utils/store';
 import ReactLoading from 'react-loading';
-import '../../styles/_variables.scss';
 
 import { item } from "api/api";
 import { Button } from "components/Button";
 import { UserCard } from "components/UserCard";
-import { useEffect, useState } from "react";
+
 import { UsersResponse } from "types/UsersResponse";
 import { User } from "types/User";
-import { RootState } from 'utils/store';
-import { useSelector } from "react-redux"
 
 export const Testimonials = () => {
   const newUserId = useSelector<RootState, number>((state) => state.newUserId)
@@ -22,6 +22,7 @@ export const Testimonials = () => {
   const reachedLimit = page === totalPages;
  
   const loadSpecialists = async (nextPage = 1) => {
+    // prevent loading users if it is the last page
     if (reachedLimit) {
       return;
     }
@@ -29,6 +30,7 @@ export const Testimonials = () => {
     try {
       setIsLoading(true);
 
+      // If the next page is not passed (meaning we called loadSpecialists from useEffect) and it equals 1. Then we load the first page from API where new user us located.
       const response: UsersResponse = await item.get<UsersResponse>(`/users?page=${nextPage}&count=6`);
 
       const { users: usersFromServer, page: currentPage, total_pages } = response;
@@ -37,6 +39,7 @@ export const Testimonials = () => {
         user2.registration_timestamp - user1.registration_timestamp)
       );
 
+      // We have just added a new user so have to just display the first page from API. Otherwise it means that we called the function in handleClick and passed nextPage, so we need to add up users to the existing ones.
       if (nextPage === 1 && newUserId > 0) {
         setUsers(sortedUsers);
       } else {
@@ -45,8 +48,8 @@ export const Testimonials = () => {
 
       setPage(currentPage);
       setTotalPages(total_pages);
-    } catch {
-      console.log('errorHERE');
+    } catch (error) {
+      // error logic
     } finally {
       setIsLoading(false);
     }
@@ -72,23 +75,23 @@ export const Testimonials = () => {
           {users.map(user => <UserCard key={user.id} user={user} />)}
         </div>
 
-      {isLoading && (
-        <ReactLoading
-          type="spin"
-          color='#00bdd3'
-          height={40}
-          width={40}
-          className='loading'
-        />
-      )}
+        {isLoading && (
+          <ReactLoading
+            type="spin"
+            color='#00bdd3'
+            height={40}
+            width={40}
+            className='loading'
+          />
+        )}
 
-      {!reachedLimit && (
-        <Button
-          text="Show more"
-          onClick={handleClick}
-          type="button"
-        />
-      )}
+        {!reachedLimit && (
+          <Button
+            text="Show more"
+            onClick={handleClick}
+            type="button"
+          />
+        )}
     </div>
   )
 }

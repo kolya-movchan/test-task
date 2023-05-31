@@ -13,10 +13,11 @@ export const Header = () => {
                 className="logo__picture"
               />
             </div>
+
             <span className="logo__text">testtask</span>
           </a>
-
         </div>
+
         <div className="navigation">
           <button
             className="button"

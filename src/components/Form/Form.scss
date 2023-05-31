@@ -40,7 +40,6 @@
   }
 
   &__photo-container {
-    // margin-bottom: 50px;
     width: 100%;
     display: flex;
   }
@@ -85,33 +84,6 @@
     color: $error-color;
     background-color: $bg-color;
   }
-
-  // .input {
-  //   padding: 16px 14px;
-
-  //   height: 54px;
-  //   width: 100%;
-  //   border: 1px solid #d0cfcf;
-  //   border-radius: 4px;
-  //   background-color: $bg-color;
-
-  //   &::placeholder {
-  //     color: $placeholder;
-  //   }
-
-  //   &--file {
-  //     border-left: none;
-  //     border-radius: 0 4px 4px 0;
-
-  //     input &:focus {
-  //       outline-color: none;
-  //     }
-  //   }
-
-  //   &--loaded::placeholder {
-  //     color: $color-dark;
-  //   }
-  // }
 
   .positions {
     display: flex;

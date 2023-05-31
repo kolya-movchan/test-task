@@ -1,5 +1,5 @@
-import React, { SyntheticEvent, useState } from "react";
-import { User } from "types/User";
+import React, { SyntheticEvent, useState } from "react"
+import { User } from "types/User"
 
 type Props = {
   user: User,

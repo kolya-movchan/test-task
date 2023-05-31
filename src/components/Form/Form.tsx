@@ -1,27 +1,31 @@
+import React, { ChangeEvent, useEffect, useState } from "react"
+
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "utils/store"
+import { actions as errorActions, State } from "reducers/error"
+import { actions as userActions } from "reducers/newUserId"
+
+import { emailValidation, phoneValidation } from 'utils/regex'
+
 import { item } from "api/api"
 import { Button } from "components/Button"
 import { Input } from "components/Input"
 import { File as FileInput } from "components/File"
 import { RadioInput } from "components/RadioInput"
-import React, { ChangeEvent, useEffect, useState } from "react"
+
 import { Position } from "types/Position"
 import { Position as PositionType } from "types/PositionList"
 import { PositionResponse } from "types/PositionResponse"
-import { emailValidation, phoneValidation } from 'utils/regex'
 import { Error, ErrorObject } from '../../types/Error';
 import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
-import { useDispatch, useSelector } from "react-redux"
-import { actions as errorActions, State } from "reducers/error"
-import { actions as userActions } from "reducers/newUserId"
-import { RootState } from "utils/store"
 
 export const Form = () => {
   const dispatch = useDispatch();
 
   const newUserId = useSelector<RootState, number>((state) => state.newUserId);
-  
+
   const {
     errorName,
     errorTextName,
@@ -41,35 +45,26 @@ export const Form = () => {
   const [selectedOptionId, setSelectedOptionId] = useState<number>(1);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const initial: ErrorObject = {
-    // errorName: false,
-    // errorTextName: '',
-    // errorEmail: false,
-    // errorTextEmail: '',
-    // errorPhone: false,
-    // errorTextPhone: '',
-    // errorFile: false,
-    // errorTextFile: ''
-  }
-
-  const [error, setError] = useState(initial);
+  // const [error, setError] = useState<ErrorObject>({});
 
   const loadPositions = async () => {
     try {
       const response = await item.get<PositionResponse>('/positions');
 
       setPositions(response.positions)
-      
     } catch (error) {
-      console.log(error);
+      // error logic
     }
   }
 
   const loadToken = async () => {
-    const token = await item.get<Token>('/token');
+    try {
+      const token = await item.get<Token>('/token');
 
-    localStorage.setItem('tokenKey', token.token);
+      localStorage.setItem('tokenKey', token.token);
+    } catch (error) {
+      // error logic
+    }
   }
 
   const handleNameInput = (value: string) => {
@@ -86,6 +81,8 @@ export const Form = () => {
 
   const handleOptionChange = (value: PositionType) => {
     setSelectedOption(value);
+
+    // controlling the state of position with a help of the targeted element from the options list
 
     switch (value) {
       case PositionType.LAWYER:
@@ -121,17 +118,22 @@ export const Form = () => {
     }
   };
 
+  // 4 validate functions below take care of the error state of each input field with the help of Redux dispatch hook, and show the error depending on the boolean value and the enum text arguments.
+
   const validateInputName = () => {
+    // if no name is entered show the error
     if (!name.length) {
       dispatch(errorActions.notifyWrongName(true, Error.NONAME));
       return
     }
 
+    // if name length entered less than 2 charactes show the error
     if (name.length < 2) {
       dispatch(errorActions.notifyWrongName(true, Error.SHORTNAME));
       return
     }
 
+    // if name length entered more than 60 charactes show the error
     if (name.length === 61) {
       dispatch(errorActions.notifyWrongName(true, Error.LONGNAME));
       return
@@ -143,11 +145,13 @@ export const Form = () => {
   const validateInputEmail = () => {
     const isValidEmail = emailValidation.test(email);
 
+    // if no email is entered show the error
     if (!email) {
       dispatch(errorActions.notifyWrongEmail(true, Error.NOEMAIL));
       return
     }
 
+    // if email entered does not satisfy the format of the requirement show the error
     if (!isValidEmail) {
       dispatch(errorActions.notifyWrongEmail(true, Error.WRONGEMAIL))
       return
@@ -159,11 +163,13 @@ export const Form = () => {
   const validateInputPhone = () => {
     const isValidPhone = phoneValidation.test(phone);
 
+    // if no phone is entered show the error
     if (!phone) {
       dispatch(errorActions.notifyWrongPhone(true, Error.NOPHONE));
       return
     }
 
+    // if phone entered does not satisfy the format of the requirement show the error
     if (!isValidPhone) {
       dispatch(errorActions.notifyWrongPhone(true, Error.WRONGPHONEFORMAT));
       return
@@ -173,12 +179,14 @@ export const Form = () => {
   }
 
   const validateInputFile = () => {
+    // if no file is selected we just return from the function
     if (!selectedFile) {
       return
     }
 
     const allowedFormats = ['image/jpeg', 'image/jpg'];
 
+    // if format differs from allowedFormats show the error
     if (!allowedFormats.includes(selectedFile.type)) {
       dispatch(errorActions.notifyWrongFile(true, Error.FILEFORMAT));
       return;
@@ -186,6 +194,7 @@ export const Form = () => {
 
     const maxSize = 5e+6; // 5MB
 
+    // if size more than maxSize show the error
     if (selectedFile.size > maxSize) {
       dispatch(errorActions.notifyWrongFile(true, Error.FILESIZE));
       return;
@@ -196,7 +205,7 @@ export const Form = () => {
     img.src = selectedFile ? URL.createObjectURL(selectedFile) : '';
     
     img.onload = () => {
-      // Check minimum dimensions
+      // Check minimum dimensions and if it less than 70x70 show the error
       if (img.width < 70 || img.height < 70) {
         dispatch(errorActions.notifyWrongFile(true, Error.FILERESOLUTION));
         return;
@@ -206,25 +215,36 @@ export const Form = () => {
     dispatch(errorActions.notifyWrongFile(false));
   }
 
+  // we need this function to control the submit button
   const enableSubmit = () => {
     const allFilledIn = name && email && phone && selectedOption && selectedFile;
 
+    // if some field is not filled in we just return immediately
     if (!allFilledIn) {
-      return false
+      // return false
     }
 
-    for (const key in error) {
-      if (typeof error[key] === "boolean" && error[key] === true) {
+    // if some field has an error we still forbid to enable the submit button
+    const errorsStateObject = {
+      errorName,
+      errorEmail,
+      errorPhone,
+      errorFile,
+    }
+
+    for (const key in errorsStateObject) {
+      if (errorsStateObject[key as keyof typeof errorsStateObject] === true) {
         return false
       }
     }
 
     return true;
-  }  
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
+    // setting up data as is stated in tech requirements
     const formData = new FormData();
 
     formData.append('position_id', selectedOptionId.toString());
@@ -240,7 +260,7 @@ export const Form = () => {
       dispatch(userActions.add(response.user_id))
       
     } catch (error) {
-      console.log(error);
+      // error logic
     } finally {
       setIsLoading(false)
     }
@@ -255,6 +275,7 @@ export const Form = () => {
     validateInputFile()
   }, [selectedFile])
 
+  // if the user is registered we immediately show the success picture and do not render the rest
   if (newUserId) {
     return (
       <div className="success">
@@ -321,28 +342,29 @@ export const Form = () => {
             </div>
           </div>
 
-          <div className="position form__position">
-            <h2 className="form__position-title">
-              Select your position
-            </h2>
+          {positions && (
+             <div className="position form__position">
+              <h2 className="form__position-title">
+                Select your position
+              </h2>
+  
+              <ul className="positions">
+                {positions.map(position => {
+                    const { id, name } = position;
 
-            <ul className="positions">
-              {positions && (
-                positions.map(position => {
-                  const { id, name } = position;
-                  return (
-                    <li className="form__radio" key={id}>
-                      <RadioInput
-                        value={name}
-                        checked={selectedOption}
-                        onSelect={handleOptionChange}
-                      />
-                    </li>
-                  )
-                })
-              )}
-            </ul>
-          </div>
+                    return (
+                      <li className="form__radio" key={id}>
+                        <RadioInput
+                          value={name}
+                          checked={selectedOption}
+                          onSelect={handleOptionChange}
+                        />
+                      </li>
+                    )
+                  })}
+              </ul>
+           </div>
+          )}
 
           <FileInput
             selectedFile={selectedFile}

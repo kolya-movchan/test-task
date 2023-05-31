@@ -12,5 +12,12 @@ export enum Error {
 }
 
 export type ErrorObject = {
-  [key: string]: boolean | string;
+  errorName: boolean,
+  errorTextName: string,
+  errorEmail: boolean,
+  errorTextEmail: string,
+  errorPhone: boolean,
+  errorTextPhone: string,
+  errorFile: boolean,
+  errorTextFile: string,
 };

@@ -15,5 +15,4 @@ export interface UserForPost {
   phone: string,
   position_id: number | null,
   photo: File | null,
-  // id: number,
 }

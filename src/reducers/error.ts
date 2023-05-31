@@ -1,11 +1,14 @@
+import { ErrorObject } from "types/Error";
 import { Reducer } from "types/Reducer";
 
+// type of action creator
 type NameIsWrong = {
   type: typeof Reducer.NAMEISWRONG,
   errorName: boolean,
   errorTextName: string
 };
 
+// action creator
 export const notifyWrongName = (status: boolean, value = ''): NameIsWrong => ({
   type: Reducer.NAMEISWRONG,
   errorName: status,
@@ -18,7 +21,7 @@ type EmailIsWrong = {
   errorTextEmail: string
 };
 
-export const notifyWrongEmail = (status: boolean,value = ''): EmailIsWrong => ({
+export const notifyWrongEmail = (status: boolean, value = ''): EmailIsWrong => ({
   type: Reducer.EMAILISWRONG,
   errorEmail: status,
   errorTextEmail: value,
@@ -48,6 +51,7 @@ export const notifyWrongFile = (status: boolean, value = ''): FileIsWrong => ({
   errorTextFile: value,
 });
 
+// object of action creators
 export const actions = {
   notifyWrongName,
   notifyWrongEmail,
@@ -55,13 +59,16 @@ export const actions = {
   notifyWrongFile,
 };
 
+// all possible Action types
 type Action = NameIsWrong
   | EmailIsWrong
   | PhoneIsWrong
   | FileIsWrong;
 
-export type State = { [key: string]: boolean | string };
+// type of our Redux state
+export type State = ErrorObject;
 
+// our initial errors Redux state
 const initial: State = {
   errorName: false,
   errorTextName: '',
@@ -73,6 +80,7 @@ const initial: State = {
   errorTextFile: '',
 }
 
+// error reducer which updates state depending on the passed type of action creator
 const errorReducer = (errorsStored = initial, action: Action): State => {
   switch (action.type) {
     case Reducer.NAMEISWRONG: {

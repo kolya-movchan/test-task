@@ -1,5 +1,5 @@
 export const scrollToSection = (target: string) => {
-  const section = document.getElementById(target);  
+  const section = document.getElementById(target);
 
   if (section) {
     const sectionRect = section.getBoundingClientRect();

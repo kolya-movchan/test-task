@@ -1,5 +1,5 @@
-import classNames from 'classnames'
 import React, { useState } from 'react'
+import classNames from 'classnames'
 
 type Props = {
   placeholder: string,
@@ -48,6 +48,7 @@ export const Input: React.FC<Props> = ({
             required
           />
 
+          {/* here we display either helper text or error text depending if we receive true or false as error's value from props */}
           {!isError ?
           (
             <p className="helper helper--info">

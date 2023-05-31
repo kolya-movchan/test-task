@@ -1,5 +1,5 @@
-import { Position as PositionType } from '../../types/PositionList';
 import React from 'react';
+import { Position as PositionType } from '../../types/PositionList';
 
 type Props = {
   value: string,
@@ -18,6 +18,7 @@ export const RadioInput: React.FC<Props> = ({ value, checked, onSelect }) => {
           checked={checked === value}
           onChange={(event) => onSelect(event.currentTarget.value as PositionType)}
         />
+
         <span className="radio-title">
           {value}
         </span>

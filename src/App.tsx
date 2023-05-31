@@ -1,7 +1,7 @@
-import { Banner } from 'components/Banner';
-import { Form } from 'components/Form';
-import { Testimonials } from 'components/Testimonials/Testimonials';
 import { Header } from './components/Header'
+import { Banner } from 'components/Banner';
+import { Testimonials } from 'components/Testimonials/Testimonials';
+import { Form } from 'components/Form';
 
 function App() {
   return (
