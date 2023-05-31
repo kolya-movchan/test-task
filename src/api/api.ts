@@ -2,14 +2,7 @@ export {};
 
 const BASE_URL = 'https://frontend-test-assignment-api.abz.agency/api/v1';
 
-function wait(delay: number) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
-}
-
 type RequestMethod = 'GET' | 'POST';
-// type Data = UserForPost | FormData | null;
 type Data = FormData | null;
 
 function request<T>(
@@ -19,30 +12,17 @@ function request<T>(
 ): Promise<T> {
   const options: RequestInit = { method };
 
+  // if it is POST request then we are ading body with the data and set up the appropriate headers
+
   if (data) {
-    console.log(data);
-    
-    options.body = data;
-    // options.body = JSON.stringify(data);
+    options.body = data
     options.headers = {
       'Token': localStorage.getItem('tokenKey') || '',
     };
   }
 
-
-  return wait(0)
-    .then(() => fetch(BASE_URL + url, options))
-    .then(response => {
-      // if (options.body) {
-      //   console.log(response);
-      // }
-
-      // if (!response.ok) {
-      //   throw new Error();
-      // }
-
-      return response.json();
-    });
+  return fetch(BASE_URL + url, options)
+    .then(response => response.json());
 }
 
 export const item = {
