@@ -5,7 +5,7 @@ export const Header = () => {
     <header className="header">
       <div className="header__container">
         <div className="logo-container">
-          <div className="logo-wrapper">
+          <a href="/" className="logo-wrapper">
             <div className="logo">
               <img
                 src="./icons/logo.svg"
@@ -14,7 +14,8 @@ export const Header = () => {
               />
             </div>
             <span className="logo__text">testtask</span>
-          </div>
+          </a>
+
         </div>
         <div className="navigation">
           <button
@@ -23,6 +24,7 @@ export const Header = () => {
           >
             Users
           </button>
+
           <button
             className="button"
             onClick={() => scrollToSection('registering')}
