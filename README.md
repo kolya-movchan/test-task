@@ -1,9 +1,9 @@
-# INTRO
+# Intro
 Completing this test assignment provided me with valuable hands-on experience in several key areas. I further enhanced my skills in responsive web design, particularly in creating adaptable layouts for different screen sizes. I gained practical knowledge of working with REST APIs, including handling GET and POST requests and integrating API responses into the application. Additionally, I improved my understanding of form validation and submission, error handling, and managing state using Redux. The project allowed me to familiarize myself with a range of technologies, libraries, and tools, enabling me to develop efficient and robust front-end solutions.
 
 [DEMO LINK](https://kolya-movchan.github.io/test-task)
 
-# TECHNOLOGIES:
+# Technologies:
 
 To complete this project, I utilized the following technologies:
 
