@@ -16,7 +16,7 @@ import { RadioInput } from "components/RadioInput"
 import { Position } from "types/Position"
 import { Position as PositionType } from "types/PositionList"
 import { PositionResponse } from "types/PositionResponse"
-import { Error, ErrorObject } from '../../types/Error';
+import { Error } from '../../types/Error';
 import { Helper } from "types/Helper"
 import { Token } from "types/TokenResponse"
 import { UserPostResponse } from "types/UserPostResponse"
@@ -221,7 +221,7 @@ export const Form = () => {
 
     // if some field is not filled in we just return immediately
     if (!allFilledIn) {
-      // return false
+      return false
     }
 
     // if some field has an error we still forbid to enable the submit button
