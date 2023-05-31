@@ -21,7 +21,6 @@ SECURITY.md
 prettierrc.json
 .prettierignore
 .lintstagedrc.json
-.gitignore
 .eslintrc.json
 .eslintignore
 .editorconfig
